@@ -317,12 +317,11 @@ goog.array.map = goog.NATIVE_ARRAY_PROTOTYPES &&
  * @template T,S,R
  */
 goog.array.reduce = function(arr, f, val, opt_obj) {
-  if (arr.reduce) {
-    if (opt_obj) {
-      return arr.reduce(goog.bind(f, opt_obj), val);
-    } else {
-      return arr.reduce(f, val);
-    }
+  if(goog.NATIVE_ARRAY_PROTOTYPES && goog.array.ARRAY_PROTOTYPE_.reduce) {
+	if(opt_obj) {
+		f = goog.bind(f, opt_obj);
+	}
+	return goog.array.ARRAY_PROTOTYPE_.reduce.call(arr, f, val);
   }
   var rval = val;
   goog.array.forEach(arr, function(val, index) {
